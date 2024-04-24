@@ -2,7 +2,6 @@ Projeto CRUD de Clientes.
 
 Este projeto consiste em um sistema CRUD (Create, Read, Update, Delete) para gerenciar clientes. Ele foi desenvolvido utilizando Node.js, Express e Knex.js para interação com o banco de dados SQLite. O sistema permite inserir, visualizar, atualizar e deletar informações dos clientes.
 
-Como executar o projeto
 Para executar o projeto, siga os passos abaixo:
 
 1 - Clone o repositório para sua máquina local
