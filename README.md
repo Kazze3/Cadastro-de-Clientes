@@ -21,3 +21,5 @@ Para executar o projeto, siga os passos abaixo:
     Node src/index.js
     
 5- O servidor estará rodando em http://localhost:3000/. Você pode abrir o template que contem o arquivo Home.html no navegador.
+
+Os comandos Delete e Alterar precisam fornecer o E-Mail do cliente para localizar
