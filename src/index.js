@@ -8,4 +8,4 @@ app.use(express.json()) //habilita a leitura dos jsons
 app.use(routes)
 
 
-app.listen(3000,console.log('Rodou mininu'))
+app.listen(3000,console.log('Servidor rodando'))
