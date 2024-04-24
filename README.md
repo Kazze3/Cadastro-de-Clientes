@@ -15,6 +15,7 @@ Para executar o projeto, siga os passos abaixo:
     Express: npm install express
     Knex.js: npm install knex
     SQLite: npm install sqlite3
+    Cors: npm install cors
     
 4- Após a instalação das dependências, você pode iniciar o servidor. Execute o seguinte comando:
     Node src/index.js
