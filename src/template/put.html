@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        button {
+            width: calc(100% - 10px);
+            margin-bottom: 10px;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 10px;
+            text-decoration: none;
+            color: #666;
+        }
+
+        #resultado {
+            margin-top: 20px;
+            margin-left: 460px;
+            margin-right: 460px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <form id="inserir">
+        <label for="Nome">Nome</label>
+        <input type="text" id="nome" name="Nome">
+
+        <label for="Email">E-Mail</label>
+        <input type="email" id="Email" name="Email">
+
+        <label for="tel">Celular</label>
+        <input type="tel" id="tel" name="Telefone">
+
+        <label for="Endereço">Endereço</label>
+        <input type="text" id="Endereço" name="Endereço">
+
+        <button type="button" onclick="atualizarAnime()">Enviar</button>
+        <a href="file:///C:/Users/Bruno/Desktop/CRUD/src/template/Home.html">Voltar</a>
+    </form>
+
+    <div id="resultado"> </div>
+
+    <script>
+        function atualizarAnime() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const params = urlParams.get('Email');
+            const Nome = document.getElementById('nome').value;
+            const Email = document.getElementById('Email').value;
+            const Telefone = document.getElementById('tel').value;
+            const Endereço = document.getElementById('Endereço').value;
+
+            fetch(`http://localhost:3000/Alterar/${params}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ Nome: Nome, Email: Email, Telefone: Telefone, Endereço: Endereço })
+            })
+            .then(resp => resp.json())
+            .then((data) => {
+                document.getElementById('resultado').innerHTML = JSON.stringify(data);
+            })
+            .catch(error => console.log('erro: ', error));
+        }
+    </script>
+</body>
+</html>

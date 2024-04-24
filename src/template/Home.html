@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            background-color: aqua;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        #cadastro {
+            background-color: white;
+            width: 30%;
+            padding: 5%;
+            border-radius: 20px;
+            margin: 20px;
+        }
+
+        #tabela {
+            background-color: white;
+            width: 60%;
+            padding: 20px;
+            border-radius: 20px;
+            margin: 20px;
+            max-height: 450px;
+            overflow: auto;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            padding: 13px;
+            border-radius: 20px;
+            margin-top: 1-px;
+            display: flex;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #buttons {
+            display: flex;
+            justify-content: space-between;
+            width: 190px; /* largura total dos botões */
+            margin-left: 120px ;
+       
+        }
+
+        #deleteBtn, #updateBtn {
+            flex: 1; /* cada botão ocupará a mesma largura */
+        }
+        #res {
+            align-self: center; /* centralizar a div horizontalmente */
+            margin-top: 20px; /* margem superior para separar do conteúdo acima */
+            margin-left: 130px;
+        }
+    </style>
+</head>
+<body>
+
+   <div id="cadastro">
+        <h1 style="text-align: center;">Cadastro</h1> 
+    <form id="Form" method="post">
+        <label style="display: block; margin-bottom: 10px;" for="Nome">Nome </label>
+        <input style="width: 100%; margin-bottom: 10px;" type="text" id="Nome" name="Nome">
+
+        <label style="display: block; margin-bottom: 10px;" for="Email">E-Mail </label>
+        <input style="width: 100%; margin-bottom: 10px;" type="email" id="Email" name="Email">
+
+        <label style="display: block; margin-bottom: 10px;" for="tel">Celular </label>
+        <input style="width: 100%; margin-bottom: 10px;" type="tel" id="tel" name="Telefone">
+
+        <label style="display: block; margin-bottom: 10px;" for="Endereço">Endereço</label>
+        <input style="width: 100%; margin-bottom: 10px;" type="text" id="Endereço" name="Endereço">
+
+    </form>
+    <div id="buttons">
+        <button id="deleteBtn" onclick="Delete()">Delete</button>
+        <button id="updateBtn" onclick="PUT()">Alterar</button>
+        <button type="submit" onclick="Enviar()">Enviar</button>
+    </div>
+    
+    <div id="res"></div>
+</div>
+
+<div id="tabela">
+    <div id="resultado"></div>
+</div>
+
+
+    <script>
+        const form = document.getElementById('Form');
+    
+        async function Enviar(){
+    
+            let Nome = document.getElementById('Nome').value;
+            let Email = document.getElementById('Email').value;
+            let Telefone = document.getElementById('tel').value;
+            let Endereço = document.getElementById('Endereço').value;
+    
+            try {
+                let response = await fetch('http://localhost:3000/inserir', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ Nome, Email, Telefone, Endereço })
+                });
+                let data = await response.json();
+                console.log(data);
+                document.getElementById('res').innerHTML = JSON.stringify(data);
+
+                exibir()
+            } catch (error) {
+                console.error(error);
+            }
+        };
+    
+        async function exibir(){
+         try {
+        let response = await fetch('http://localhost:3000/grupo');
+        let data = await response.json();
+            
+        let tabela = document.createElement('table');
+        tabela.style.border = '1px solid black';
+        tabela.style.borderCollapse = 'collapse';
+        tabela.style.width = '100%';
+        
+        let cabecalho = tabela.createTHead();
+        let cabecalhoRow = cabecalho.insertRow();
+        for (let campo in data[0]) {
+            let th = document.createElement('th');
+            th.textContent = campo;
+            th.style.border = '1px solid black';
+            th.style.padding = '10px';
+            cabecalhoRow.appendChild(th);
+        }
+        
+        
+        let corpo = tabela.createTBody();
+        for(let key in data){
+            let row = corpo.insertRow();
+            for (let campo in data[key]) {
+                let cell = row.insertCell();
+                cell.textContent = data[key][campo];
+                cell.style.border = '1px solid black';
+                cell.style.padding = '10px';
+            }
+        }
+        
+        let res = document.getElementById('resultado');
+        res.innerHTML = '';
+        res.style.maxHeight = '210px'
+        res.style.overflow = 'auto'; 
+        res.appendChild(tabela);
+        } catch (error) {
+        console.log(error);
+        }
+      }
+        exibir()
+
+        function Delete(){
+            let Email= document.getElementById('Email').value
+            fetch(`http://localhost:3000/delete/${Email}`,{
+                method: 'DELETE'
+            })
+            .then(response=>response.json())
+            .then(data=>{
+                document.getElementById('res').innerHTML=JSON.stringify(data)
+                exibir()
+            })
+            .catch(error=>console.log('error: ',error))
+        }
+
+        function PUT(){
+            const Email= document.getElementById('Email').value
+
+            const url= `put.html?Email=${encodeURIComponent(Email)}`;
+            window.open(url, '_blank');
+        }
+    </script>
+</body>
+</html>
