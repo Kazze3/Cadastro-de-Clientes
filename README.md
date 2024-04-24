@@ -7,7 +7,7 @@ Para executar o projeto, siga os passos abaixo:
 
 1 - Clone o repositório para sua máquina local
 
-2 - Abra a pasta do download, e carregue o arquivo no VsCode
+2 - Abra o arquivo baixado, e carregue a primeira pasta do arquivo no VsCode
 
 3 - Instale as dependências do projeto. Como não enviei a pasta node_modules, será necessário instalá-las manualmente.
 
