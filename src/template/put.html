@@ -80,14 +80,14 @@
         <label for="Endereço">Endereço</label>
         <input type="text" id="Endereço" name="Endereço">
 
-        <button type="button" onclick="atualizarAnime()">Enviar</button>
+        <button type="button" onclick="atualizar()">Enviar</button>
         <a href="file:///C:/Users/Bruno/Desktop/Cadastro-de-Clientes-main/Cadastro-de-Clientes-main/src/template/Home.html">Voltar</a>
     </form>
 
     <div id="resultado"> </div>
 
     <script>
-        function atualizarAnime() {
+        function atualizar() {
             const urlParams = new URLSearchParams(window.location.search);
             const params = urlParams.get('Email');
             const Nome = document.getElementById('nome').value;
